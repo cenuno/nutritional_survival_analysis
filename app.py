@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, jsonify
+import pandas as pd
 
 app = Flask(__name__, static_url_path="")
 
@@ -15,8 +16,9 @@ def output():
     data = request.get_json(force=True)
     # print the user input data to console
     print(data)
-    # store user input data in dictionary
-    output = {"calories": data["calories"],
-              "carbs": data["carbs"]}
-    # output dictionary to web
-    return jsonify(output)
+    # build df
+    df = pd.DataFrame([data])
+    # print df to console
+    print(df)
+    # output df to web
+    return jsonify(df["carbs"].values[0])
